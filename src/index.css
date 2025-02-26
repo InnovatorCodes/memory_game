@@ -1,46 +1,88 @@
 @font-face {
   font-family: friends;
-  src: url('./assets/friends_font.TTF');
+  src: url("./assets/friends_font.TTF");
 }
 
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html{
+html {
   height: 100%;
 }
 
-body{
+body {
   height: 100%;
   padding: 1rem 2rem;
-  background-image: url('./assets/background2.jpg');
+  background-image: url("./assets/background.jpg");
 }
 
-.header{
+.main {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center; 
-}
-
-.logo{
-  width: 18vw;
-}
-
-.help{
-  width: 3rem;
-}
-
-.cards{
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(5,min-content);
   gap: 1rem;
 }
 
-.card{
+.scores {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  font-family: friends;
+  color: white;
+  font-size: 1.4rem;
+  letter-spacing: 3px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  width: 18vw;
+}
+
+.help {
+  width: 3rem;
+}
+
+.cards {
+  display: grid;
+  justify-content: end;
+  grid-template-columns: repeat(5, min-content);
+  gap: 1rem;
+  flex: 1;
+}
+
+.main > div:nth-child(2) {
+  display: flex;
+  width: 17vw;
+  flex-direction: column-reverse;
+  justify-content: end;
+  align-items: end;
+  gap: 0.5rem;
+  font-family: friends;
+  letter-spacing: 2px;
+}
+
+.help-content {
+  color: white;
+  background-color: black;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: none;
+}
+
+.help:hover + .help-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card {
   width: 13rem;
   padding: 0.5rem;
   background-color: #a188c9;
@@ -51,11 +93,13 @@ body{
   align-items: center;
   font-family: friends;
   letter-spacing: 2px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
   cursor: pointer;
 }
 
-.card img{
+.card img {
   height: 14rem;
   width: 12rem;
   border-radius: 0.5rem;
