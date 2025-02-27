@@ -8,6 +8,7 @@ export default function MemoryGame() {
   const [selected, setSelected] = useState([]);
   const [score, setScore] = useState(0);
   const [highscore, setHighscore] = useState(0);
+  const [flipped, setFlipped] = useState(false);
   //const characters=["Ross", "Chandler", "Joey", "Monica", "Rachel", "Phoebe","Janice", "Mike", "Richard","Emily", "Carol", "Estelle", "Gunther", "Jack", "Judy"];
   const [shuffledCharacters, setShuffledCharacters] = useState(
     shuffle(characters),
@@ -17,7 +18,8 @@ export default function MemoryGame() {
       name={character.name}
       key={character.id}
       image={character.image}
-      clickHandler={clickHandler}
+      onClick={clickHandler}
+      flipped={flipped}
     />
   ));
   function shuffle(array) {
@@ -29,6 +31,14 @@ export default function MemoryGame() {
   }
 
   function clickHandler(name) {
+    setFlipped(true);
+    setTimeout(() => {
+      updateGameState(name);
+    }, 1000);
+    setTimeout(() => setFlipped(false), 1200);
+  }
+
+  function updateGameState(name) {
     let selectedCharacter = shuffledCharacters.find(
       (character) => character.name == name,
     );
@@ -52,6 +62,15 @@ export default function MemoryGame() {
     setShuffledCharacters(newShuffledCharacters);
   }
 
+  function resetGame() {
+    setSelected([]);
+    setScore(0);
+    setHighscore(0);
+    let newShuffledCharacters = [...shuffledCharacters];
+    shuffle(newShuffledCharacters);
+    setShuffledCharacters(newShuffledCharacters);
+  }
+
   const helpcontent = [
     "Don't select the same card twice.",
     "The cards shuffle after every click, so stay sharp!",
@@ -64,7 +83,12 @@ export default function MemoryGame() {
   return (
     <>
       <div className="header">
-        <img src={logo} alt="FRIENDS Logo" className="logo" />
+        <img
+          src={logo}
+          alt="FRIENDS Logo"
+          className="logo"
+          onClick={resetGame}
+        />
         <div className="scores">
           <div className="highscore">Highscore: {highscore}</div>
           <div className="score">Current Score: {score}</div>
