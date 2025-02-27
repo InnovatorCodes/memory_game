@@ -117,10 +117,6 @@ body {
   will-change: contents;
 }
 
-.card:not(.flipped):hover {
-  box-shadow: 0 0 8px 2px #fff;
-}
-
 .card.flipped {
   transform: rotateY(180deg);
 }
@@ -195,6 +191,7 @@ body {
     font-size: 1.6vmin;
   }
   #root {
+    max-height: 100vh;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -204,6 +201,10 @@ body {
 
   .header {
     flex-direction: column;
+  }
+
+  .scores {
+    font-size: 2rem;
   }
 
   .main {
