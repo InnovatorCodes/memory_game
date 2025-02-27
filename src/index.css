@@ -3,6 +3,11 @@
   src: url("./assets/friends_font.TTF");
 }
 
+:root{
+  --theme-color: #a188c9;
+  font-size: 1.6vh;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -93,7 +98,7 @@ body {
 
 .card {
   width: 13rem;
-  height: 16rem;
+  height: 17rem;
   border-radius: 0.5rem;
   font-family: friends;
   letter-spacing: 2px;
@@ -132,12 +137,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #a188c9;
+  background-color: var(--theme-color);
   background-size: cover;
 }
 
 .card-back {
-  background-color: #a188c9;
+  background-color: var(--theme-color);
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
@@ -147,7 +152,7 @@ body {
 
 .card-front img {
   width: 12rem;
-  height: 13.5rem;
+  height: 15rem;
   border-radius: 0.4rem;
 }
 
