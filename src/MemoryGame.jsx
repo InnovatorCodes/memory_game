@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Card from "./Card";
 import logo from "./assets/friends_logo_white.png";
 import helpsvg from "./assets/help_white.svg";
@@ -9,6 +9,7 @@ export default function MemoryGame() {
   const [score, setScore] = useState(0);
   const [highscore, setHighscore] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  const [loading, setLoading] = useState(true);
   //const characters=["Ross", "Chandler", "Joey", "Monica", "Rachel", "Phoebe","Janice", "Mike", "Richard","Emily", "Carol", "Estelle", "Gunther", "Jack", "Judy"];
   const [shuffledCharacters, setShuffledCharacters] = useState(
     shuffle(characters),
@@ -62,14 +63,16 @@ export default function MemoryGame() {
     setShuffledCharacters(newShuffledCharacters);
   }
 
-  function resetGame() {
+  const resetGame = useCallback(() => {
     setSelected([]);
     setScore(0);
     setHighscore(0);
-    let newShuffledCharacters = [...shuffledCharacters];
-    shuffle(newShuffledCharacters);
-    setShuffledCharacters(newShuffledCharacters);
-  }
+    setShuffledCharacters((prevCharacters) => {
+      let newShuffledCharacters = [...prevCharacters];
+      shuffle(newShuffledCharacters);
+      return newShuffledCharacters;
+    });
+  }, []);
 
   const helpcontent = [
     "Don't select the same card twice.",
@@ -79,6 +82,16 @@ export default function MemoryGame() {
   const helpDivs = helpcontent.map((content, index) => (
     <div key={index}>{content}</div>
   ));
+
+  useEffect(() => {
+    const handleLoad = () => {
+      setLoading(false); // Hide loading screen
+      resetGame(); // Reset the game after loading
+    };
+
+    window.addEventListener("load", handleLoad);
+    return () => window.removeEventListener("load", handleLoad);
+  }, [resetGame]);
 
   return (
     <>
@@ -94,7 +107,12 @@ export default function MemoryGame() {
           <div className="score">Current Score: {score}</div>
         </div>
       </div>
-      <div className="main">
+      {loading && (
+        <div className="loader-container">
+          <div className="loader"></div>
+        </div>
+      )}
+      <div className={`main ${loading ? "loading" : ""}`}>
         <div className="cards">{characterCards}</div>
         <div>
           <img src={helpsvg} alt="help" className="help" />
